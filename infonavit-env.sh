@@ -17,32 +17,34 @@ if [ !$ruby -eq 0 ] ; then
 	fi
 fi
 
+if [ $ruby -eq 0 ] ; then
+	# Check if sass is installed
+	sass=$(gem list sass -i)
 
-# Check if sass is installed
-sass=$(gem list sass -i)
+	if [ !$sass ] ; then
+		printf "${blue}Do you want to install sass? [yes/no]${reset}\n"
+		read answer
 
-if [ !$sass ] ; then
-	printf "${blue}Do you want to install sass? [yes/no]${reset}\n"
-	read answer
+		if [ $answer = yes ] ; then
+			printf "${green}============================== Installing SASS ==============================${reset}\n"
+			sudo su -c "gem install sass"
+		fi
+	fi
 
-	if [ $answer = yes ] ; then
-		printf "${green}============================== Installing SASS ==============================${reset}\n"
-		sudo su -c "gem install sass"
+
+	# Check if compass is installed
+	compass=$(gem list compass -i)
+
+	if [ !$compass ] ; then
+		printf "${blue}Do you want to install compass? [yes/no]${reset}\n"
+		read answer
+
+		if [ $answer = yes ] ; then
+			printf "${green}============================== Installing Compass ==============================${reset}\n"
+			sudo su -c "gem install compass"
+		fi
 	fi
 fi
 
-
-# Check if compass is installed
-compass=$(gem list compass -i)
-
-if [ !$compass ] ; then
-	printf "${blue}Do you want to install compass? [yes/no]${reset}\n"
-	read answer
-
-	if [ $answer = yes ] ; then
-		printf "${green}============================== Installing Compass ==============================${reset}\n"
-		sudo su -c "gem install compass"
-	fi
-fi
 
 exit
